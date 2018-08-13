@@ -7,7 +7,7 @@ import {readFileSync} from 'fs';
 import {join} from 'path';
 
 //<editor-fold desc="Dependencies">
-let del = require('del'),
+const del = require('del'),
 	exec = require('child_process').exec,
 	path = require('path'),
 	spawn = require('cross-spawn'),
@@ -33,11 +33,11 @@ let del = require('del'),
 //</editor-fold>
 
 //<editor-fold desc="Distribution tasks">
-let distClean = () => {
+const distClean = () => {
 	return del(paths.dist);
 };
 
-let distSources = () => {
+const distSources = () => {
 	return gulp.src([
 		paths.sass + '**/*'
 	], {base: paths.lib}
@@ -46,7 +46,7 @@ let distSources = () => {
 	);
 };
 
-let distCompile = (callback) => {
+const distCompile = (callback) => {
 	exec(`"./node_modules/.bin/ngc" -p "tsconfig.publish.json"`, (e) => {
 		if (e) {
 			console.log(e);
@@ -56,15 +56,15 @@ let distCompile = (callback) => {
 		console.log(data);
 	});
 };
-let distBundle = (callback) => {
+const distBundle = (callback) => {
 	webpack(require('./webpack.publish.js'),
 		webpackCallBack('webpack', callback)
 	);
 };
 
-let distMeta = () => {
-	let meta = reload('./package.json');
-	let output = {};
+const distMeta = () => {
+	const meta = reload('./package.json');
+	const output = {};
 
 	[
 		'name', 'version', 'description', 'keywords',
@@ -90,7 +90,7 @@ let distMeta = () => {
 	);
 };
 
-let distBuild = gulp.parallel(
+const distBuild = gulp.parallel(
 	distSources,
 	gulp.series(
 		distCompile,
@@ -99,14 +99,14 @@ let distBuild = gulp.parallel(
 	distMeta
 );
 
-let dist = gulp.series(
+const dist = gulp.series(
 	distClean,
 	distBuild
 );
 //</editor-fold>
 
 //<editor-fold desc="Showcase tasks">
-let showcaseHTML = () => {
+const showcaseHTML = () => {
 	return gulp.src([
 		paths.showcase + '**/*.hbs'
 	]).pipe(
@@ -143,7 +143,7 @@ require('gulp-release-flows')({
 	branch: 'HEAD:master'
 }); // Imports 'build:release-*' tasks
 
-let changelog = () => {
+const changelog = () => {
 	return gulp.src(
 		'CHANGELOG.md'
 	).pipe(
@@ -174,7 +174,7 @@ let changelog = () => {
 	);
 };
 
-let release = gulp.series(
+const release = gulp.series(
 	'build:bump-version',
 	//'changelog',
 	'build:commit-changes',
@@ -186,7 +186,7 @@ let release = gulp.series(
  * Publishes the module in the specified npm registry.
  * @see package.json > publishConfig
  */
-let npmPublish = (callback) => {
+const npmPublish = (callback) => {
 	return spawn(
 		'npm',
 		['publish', paths.dist],
@@ -200,7 +200,7 @@ let npmPublish = (callback) => {
 //</editor-fold>
 
 //<editor-fold desc="NPM link for dev only">
-let npmLink = (callback) => {
+const npmLink = (callback) => {
 	return spawn(
 		'npm',
 		['link', paths.dist],
@@ -212,11 +212,11 @@ let npmLink = (callback) => {
 	});
 };
 
-let watchLink = () => {
+const watchLink = () => {
 	gulp.watch(paths.src + '**/*', distBuild);
 };
 
-let devLink = gulp.series(
+const devLink = gulp.series(
 	distBuild,
 	npmLink,
 	watchLink
