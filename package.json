@@ -48,8 +48,10 @@
     "pretest": "npm run prebuild",
     "lint": "ng lint",
     "e2e": "npm run prebuild && ng e2e",
-    "changelog": "./node_modules/.bin/gulp -- changelog",
-    "release": "./node_modules/.bin/gulp publish"
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 1",
+    "release": "./node_modules/.bin/gulp publish",
+    "preversion": "npm run ci-build",
+    "postversion": "npm run changelog"
   },
   "dependencies": {
     "@angular/animations": "^6.1.2",

@@ -143,40 +143,7 @@ require('gulp-release-flows')({
 	branch: 'HEAD:master'
 }); // Imports 'build:release-*' tasks
 
-const changelog = () => {
-	return gulp.src(
-		'CHANGELOG.md'
-	).pipe(
-		conventionalChangelog({
-			// conventional-changelog options:
-			preset: 'angular'
-			//releaseCount: 0
-		}, {
-			// context options:
-			linkCompare: false,
-			repository: pkg.repository.path // Atlassian Stash-specific
-		}, {
-			// git-raw-commits options:
-			from: '2.0.0',
-			to: 'HEAD'
-		}, {
-			// conventional-commits-parser options
-		}, {
-			// conventional-changelog-writer options
-			// transform: function (commit) {
-			// 	console.log(commit);
-			// 	return commit;
-			// },
-			headerPartial: readFileSync(join(__dirname, 'changelog-header.hbs'), 'utf-8')
-		})
-	).pipe(
-		gulp.dest('./')
-	);
-};
-
 const release = gulp.series(
-	'build:bump-version',
-	//'changelog',
 	'build:commit-changes',
 	'build:push-changes',
 	'build:create-new-tag'
@@ -208,7 +175,7 @@ const npmLink = (callback) => {
 	).on('close', callback)
 	.on('error', function () {
 		console.log('[SPAWN] Error: ', arguments);
-		callback('Unable to execute NPM link')
+		callback('Unable to execute NPM link');
 	});
 };
 
@@ -247,7 +214,7 @@ gulp.task(
 	gulp.series(
 		release, // Note: this increments version number!
 		dist,
-		npmPublish
+		// npmPublish
 	)
 );
 //</editor-fold>
@@ -258,11 +225,6 @@ gulp.task(
 	gulp.series(
 		showcaseHTML
 	)
-);
-
-gulp.task(
-	'changelog',
-	changelog
 );
 
 gulp.task(
