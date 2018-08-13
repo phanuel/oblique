@@ -140,7 +140,7 @@ const showcaseHTML = () => {
 
 //<editor-fold desc="Deployment tasks">
 require('gulp-release-flows')({
-	branch: 'HEAD:master'
+	branch: 'HEAD:feature/OUI-633-improve-release-workflow'
 }); // Imports 'build:release-*' tasks
 
 const release = gulp.series(
