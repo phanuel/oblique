@@ -53,25 +53,13 @@
           "since": "3.0.0"
         },
         {
-          "name": "[obLocales]",
-          "text": "Content that will be projected as the locales choice. It will replace the default Oblique locales if locale management is disabled (see <code>ObMasterLayoutConfig</code>).",
-          "since": "3.0.0",
-          "deprecated": "10.1.0"
-        },
-        {
-          "name": "[obHeaderCustomControl]",
-          "text": "Content that will be projected as the custom controls section of the main header (next to the locales choice)",
-          "since": "5.1.0",
-          "deprecated": "10.1.0"
-        },
-        {
           "name": "<ng-template #obHeaderControl>",
-          "text": "Templates that will be projected into the controls section of the main header (next to the custom control section).",
+          "text": "Templates that will be projected into the service navigation, in the right part of the main header.",
           "since": "3.0.0"
         },
         {
           "name": "<ng-template #obHeaderMobileControl>",
-          "text": "Templates that will be projected into the controls section of the main header (next to the locales choice) for mobile layout.",
+          "text": "Templates that will be projected into the main header, left of the menu toggle. They will only appear in the mobile layout.",
           "since": "5.1.0"
         },
         {
@@ -110,16 +98,9 @@
         },
         {
           "name": "OB_PAMS_CONFIGURATION",
-          "text": "Provides the mandatory PAMS environment as well as an optional root url. This is only useful when <code>OB_ACTIVATE_SERVICE_NAVIGATION</code> is enabled.",
+          "text": "Provides the mandatory PAMS environment as well as an optional root url.",
           "type": "ObIPamsConfiguration",
           "default": "undefined",
-          "since": "10.1.0"
-        },
-        {
-          "name": "OB_ACTIVATE_SERVICE_NAVIGATION",
-          "text": "Indicates whether or not the service navigation component should be used instead of the header controls area.",
-          "type": "boolean",
-          "default": false,
           "since": "10.1.0"
         }
       ]

@@ -11,7 +11,20 @@ export class UpdateV10toV11 implements ObIMigrations {
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	applyMigrations(_options: IUpdateV10Schema): Rule {
 		return (tree: Tree, _context: SchematicContext) =>
-			chain([this.removeObSearchBox(), this.removeFakeFocus(), this.replaceScssWithCssStylesInAngularJson()])(tree, _context);
+			chain([
+				this.removeObSearchBox(),
+				this.removeFakeFocus(),
+				this.replaceScssWithCssStylesInAngularJson(),
+				this.replaceNgContainerToken('obHeaderCustomControl'),
+				this.replaceNgContainerToken('obLocales'),
+				this.wrapOneLinerContentProjectionWithNgTemplate('obHeaderCustomControl'),
+				this.wrapOneLinerContentProjectionWithNgTemplate('obLocales'),
+				this.wrapMultiLinerContentProjectionWithNgTemplate('obHeaderCustomControl'),
+				this.wrapMultiLinerContentProjectionWithNgTemplate('obLocales'),
+				this.removeContentProjectionMarker('obHeaderCustomControl'),
+				this.removeContentProjectionMarker('obLocales'),
+				this.removeActivateServiceNavigationToken()
+			])(tree, _context);
 	}
 
 	private removeObSearchBox(): Rule {
@@ -51,6 +64,77 @@ export class UpdateV10toV11 implements ObIMigrations {
 				});
 				return config;
 			});
+		});
+	}
+
+	private replaceNgContainerToken(token: string): Rule {
+		return createSafeRule((tree: Tree, _context: SchematicContext) => {
+			infoMigration(_context, `Replace ${token} with #obHeaderControl`);
+			const apply = (filePath: string): void => {
+				replaceInFile(
+					tree,
+					filePath,
+					new RegExp(`<ng-container[^>]*?${token}.*?>(?<content>.*?)<\\/ng-container>`, 'gs'),
+					'<ng-template #obHeaderControl>$<content></ng-template>'
+				);
+			};
+			return applyInTree(tree, apply, '*.html');
+		});
+	}
+
+	private wrapOneLinerContentProjectionWithNgTemplate(token: string): Rule {
+		return createSafeRule((tree: Tree, _context: SchematicContext) => {
+			infoMigration(_context, `Wrap one liner ${token} with #obHeaderControl`);
+			const apply = (filePath: string): void => {
+				replaceInFile(
+					tree,
+					filePath,
+					new RegExp(`(?<content><(?<tag>[\\w-]+).*?${token}.*?>.*?<\\/\\k<tag>>)`, 'g'),
+					'<ng-template #obHeaderControl>$<content></ng-template>'
+				);
+			};
+			return applyInTree(tree, apply, '*.html');
+		});
+	}
+
+	private wrapMultiLinerContentProjectionWithNgTemplate(token: string): Rule {
+		return createSafeRule((tree: Tree, _context: SchematicContext) => {
+			infoMigration(_context, `Wrap ${token} with #obHeaderControl`);
+			const apply = (filePath: string): void => {
+				replaceInFile(
+					tree,
+					filePath,
+					new RegExp(`(?<content>(?<whitespace>[\t ]*)<(?<tag>[\\w-]+)[^<]*?${token}.*?>.*?^\\k<whitespace><\\/\\k<tag>>)`, 'gsm'),
+					'<ng-template #obHeaderControl>\n$<content>\n</ng-template>'
+				);
+			};
+			return applyInTree(tree, apply, '*.html');
+		});
+	}
+
+	private removeContentProjectionMarker(token: string): Rule {
+		return createSafeRule((tree: Tree, _context: SchematicContext) => {
+			infoMigration(_context, `Remove ${token} content projection marker`);
+			const apply = (filePath: string): void => {
+				replaceInFile(tree, filePath, new RegExp(`\\s*${token}`, 'g'), '');
+			};
+			return applyInTree(tree, apply, '*.html');
+		});
+	}
+
+	private removeActivateServiceNavigationToken(): Rule {
+		return createSafeRule((tree: Tree, _context: SchematicContext) => {
+			infoMigration(_context, `Remove OB_ACTIVATE_SERVICE_NAVIGATION token`);
+			const apply = (filePath: string): void => {
+				replaceInFile(
+					tree,
+					filePath,
+					/{\s*provide\s*:\s*OB_ACTIVATE_SERVICE_NAVIGATION\s*,\s*useValue\s*:\s*(?:true|false)\s*}\s*,?\s*/,
+					''
+				);
+				replaceInFile(tree, filePath, /OB_ACTIVATE_SERVICE_NAVIGATION\s*,?\s*/, '');
+			};
+			return applyInTree(tree, apply, '*.ts');
 		});
 	}
 }

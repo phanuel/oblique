@@ -7,20 +7,18 @@
 	</ng-template>
 	<ng-template #obHeaderControl>
 		<a
-			class="ob-widget"
 			href="https://stash.eap.bit.admin.ch/projects/OUI/repos/oblique/"
 			[icon]="'none'"
 			matTooltip="Go to Oblique GIT repository"
 			obButton="secondary"
 			mat-icon-button
 		>
-			<mat-icon class="ob-control-icon" svgIcon="git-hub"></mat-icon>
+			<mat-icon svgIcon="git-hub"></mat-icon>
 		</a>
 	</ng-template>
 	<ng-template #obHeaderControl>
 		<button
 			type="button"
-			class="ob-widget"
 			obOffCanvasToggle
 			matTooltip="Toggle Off-Canvas"
 			(click)="offCanvasOpen = !offCanvasOpen"
@@ -29,18 +27,11 @@
 			obButton="secondary"
 			[class.rotate180]="!offCanvasOpen"
 		>
-			<mat-icon class="ob-control-icon" dropdown-toggle svgIcon="login"></mat-icon>
+			<mat-icon dropdown-toggle svgIcon="login"></mat-icon>
 		</button>
 	</ng-template>
 	<ng-template #obHeaderControl>
-		<button
-			type="button"
-			class="ob-widget"
-			mat-icon-button
-			obButton="secondary"
-			[obPopover]="languageButton"
-			matTooltip="Open example popover"
-		>
+		<button type="button" mat-icon-button obButton="secondary" [obPopover]="languageButton" matTooltip="Open example popover">
 			<mat-icon svgIcon="cog"></mat-icon>
 		</button>
 		<ng-template #languageButton>
@@ -59,37 +50,21 @@
 		</ng-template>
 	</ng-template>
 	<ng-template #obHeaderControl>
-		<button
-			type="button"
-			(click)="toggleFont(font)"
-			mat-button
-			obButton="secondary"
-			class="ob-widget"
-			[matTooltip]="'Use ' + font + 'font'"
-		>
+		<button type="button" (click)="toggleFont(font)" mat-button obButton="secondary" [matTooltip]="'Use ' + font + ' font'">
 			{{ font }}
 		</button>
 	</ng-template>
 
 	<ng-template #obHeaderMobileControl>
-		<button
-			type="button"
-			(click)="toggleFont(font)"
-			mat-button
-			obButton="secondary"
-			class="ob-widget"
-			[matTooltip]="'Use ' + font + 'font'"
-		>
+		<button type="button" (click)="toggleFont(font)" mat-button obButton="secondary" [matTooltip]="'Use ' + font + ' font'">
 			{{ font }}
 		</button>
 	</ng-template>
-
-	<ng-container obHeaderCustomControl>
-		<ul class="ob-header-controls" role="menu">
-			<li class="ob-control-item" role="menuitem">Custom 1</li>
-			<li class="ob-control-item" role="menuitem">Custom 2</li>
-		</ul>
-	</ng-container>
+	<ng-template #obHeaderMobileControl>
+		<button type="button" mat-icon-button obButton="secondary">
+			<mat-icon svgIcon="help"></mat-icon>
+		</button>
+	</ng-template>
 
 	<ng-template #obFooterLink>
 		<a href="http://www.google.ch" role="button" matTooltip="google.ch" target="_blank">Google</a>
