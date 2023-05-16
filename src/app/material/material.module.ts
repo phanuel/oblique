@@ -4,9 +4,9 @@ import {CommonModule} from '@angular/common';
 import {RouterModule, Routes} from '@angular/router';
 import {MatButtonModule} from '@angular/material/button';
 import {MatLegacyCardModule as MatCardModule} from '@angular/material/legacy-card';
-import {MatLegacyFormFieldModule as MatFormFieldModule} from '@angular/material/legacy-form-field';
+import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatLegacyInputModule as MatInputModule} from '@angular/material/legacy-input';
-import {MatLegacyListModule as MatListModule} from '@angular/material/legacy-list';
+import {MatListModule} from '@angular/material/list';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatLegacyRadioModule as MatRadioModule} from '@angular/material/legacy-radio';
 import {MatLegacySlideToggleModule as MatSlideToggleModule} from '@angular/material/legacy-slide-toggle';
@@ -45,6 +45,7 @@ import {BadgeComponent} from './badge/badge.component';
 import {DialogComponent} from './dialog/dialog.component';
 import {ExampleDialogComponent} from './dialog/example-dialog/example-dialog.component';
 import {ExpansionPanelComponent} from './expansion-panel/expansion-panel.component';
+import {ListComponent} from './list/list.component';
 import {ProgressBarComponent} from './progress-bar/progress-bar.component';
 import {TableComponent} from './table/table.component';
 import {TooltipComponent} from './tooltip/tooltip.component';
@@ -68,6 +69,7 @@ const appRoutes: Routes = [
 	{path: 'expansion-panel', component: ExpansionPanelComponent},
 	{path: 'form', component: FormComponent},
 	{path: 'icon', component: IconSampleComponent},
+	{path: 'list', component: ListComponent},
 	{path: 'mandatory', component: MandatorySampleComponent},
 	{path: 'progress-bar', component: ProgressBarComponent},
 	{path: 'slider', component: SliderComponent},
@@ -90,6 +92,7 @@ const appRoutes: Routes = [
 		ExpansionPanelComponent,
 		FormComponent,
 		IconSampleComponent,
+		ListComponent,
 		MandatorySampleComponent,
 		ProgressBarComponent,
 		SliderComponent,
