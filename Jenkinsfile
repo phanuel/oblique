@@ -11,7 +11,7 @@ nodejsPipelineTemplate {
 	gitPush = [
 		'credentialId': 'githubObliqueCredentials',
 		'repository': 'https://github.com/oblique-bit/oblique.git',
-		'branches': ['master'],
+		'branches': ['OUI-2326-use-workspaces-for-sandbox-and-sds'],
 		'tags': ['master']
 	]
 	npmRepository = [
