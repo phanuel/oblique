@@ -66,6 +66,12 @@
             },
             "production": {
               "configPath": "jest.config.prod.js"
+            },
+            "development-alt": {
+              "configPath": "jest.config.alt.js"
+            },
+            "production-alt": {
+              "configPath": "jest.config.prod.alt.js"
             }
           },
           "defaultConfiguration": "production"
@@ -187,6 +193,11 @@
             "tsConfig": "tsconfig.spec.json",
             "no-cache": ["true"],
             "run-in-band": ["true"]
+          },
+          "configurations": {
+            "alt": {
+              "configPath": "jest.config.alt.js"
+            }
           }
         }
       }

@@ -1,6 +1,10 @@
 {
   "name": "@oblique/oblique",
   "version": "",
+  "scripts": {
+    "test": "ng run oblique:test:production-alt",
+    "test-debugging": "node --expose-gc ../../node_modules/@angular/cli/bin/ng run oblique:test:development-alt --log-heap-usage"
+  },
   "peerDependencies": {
     "@angular/animations": "^15.0.0",
     "@angular/cdk": "^15.0.0",

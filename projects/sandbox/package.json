@@ -2,7 +2,8 @@
   "name": "sandbox",
   "version": "",
   "scripts": {
-    "start": "ng serve"
+    "start": "ng serve",
+    "test": "ng run sandbox:test:alt"
   },
   "dependencies": {
     "raw-loader": "^4.0.2"
