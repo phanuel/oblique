@@ -3,7 +3,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {RouterModule, Routes} from '@angular/router';
 import {MatButtonModule} from '@angular/material/button';
-import {MatLegacyCardModule as MatCardModule} from '@angular/material/legacy-card';
+import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatLegacyInputModule as MatInputModule} from '@angular/material/legacy-input';
 import {MatListModule} from '@angular/material/list';
@@ -29,6 +29,7 @@ import {MatStepperModule} from '@angular/material/stepper';
 import {MatLegacyTabsModule as MatTabsModule} from '@angular/material/legacy-tabs';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {
+	ObAlertModule,
 	ObButtonModule,
 	ObColumnLayoutModule,
 	ObErrorMessagesModule,
@@ -132,6 +133,7 @@ const appRoutes: Routes = [
 		MatTableModule,
 		MatTabsModule,
 		MatTooltipModule,
+		ObAlertModule,
 		ObButtonModule,
 		ObColumnLayoutModule,
 		ObErrorMessagesModule,
