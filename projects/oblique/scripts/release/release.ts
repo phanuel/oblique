@@ -15,10 +15,12 @@ class Release {
 
 	static perform(preVersion?: string): void {
 		const nextVersion = Release.computeVersion(Release.splitVersion(packageVersion), preVersion);
-		execSync(`npm version ${nextVersion}`);
+		execSync(`npm version ${nextVersion} --prefix ../../`);
 		Release.bumpVersion(nextVersion);
-		Release.bumpPackageVersion(nextVersion, 'package.json');
-		Release.bumpPackageVersion(nextVersion, 'package-lock.json');
+		const schematicsPath = path.join('..', 'oblique', 'schematics');
+		Release.bumpPackageVersion(nextVersion, path.join('..', 'sandbox', 'package.json'));
+		Release.bumpPackageVersion(nextVersion, path.join(schematicsPath, 'package.json'));
+		Release.bumpPackageVersion(nextVersion, path.join(schematicsPath, 'package-lock.json'));
 		Release.writeChangelog();
 	}
 
@@ -57,11 +59,10 @@ class Release {
 	}
 
 	private static bumpVersion(version: string): void {
-		writeFileSync(path.join('projects', 'oblique', 'src', 'lib', 'version.ts'), `export const appVersion = '${version}';\n`, {flag: 'w'});
+		writeFileSync(path.join('..', 'oblique', 'src', 'lib', 'version.ts'), `export const appVersion = '${version}';\n`, {flag: 'w'});
 	}
 
-	private static bumpPackageVersion(version: string, fileName: string): void {
-		const filePath = path.join('projects', 'oblique', 'schematics', fileName);
+	private static bumpPackageVersion(version: string, filePath: string): void {
 		const pkg = readFileSync(filePath)
 			.toString()
 			.replace(/"version": "[^"]*",/, `"version": "${version}",`);
@@ -69,14 +70,15 @@ class Release {
 	}
 
 	private static writeChangelog(): void {
-		const changelog: string = readFileSync('CHANGELOG.md').toString();
-		const stream = createWriteStream('CHANGELOG.md');
+		const changelogPath = path.join('..', '..', 'CHANGELOG.md');
+		const changelog: string = readFileSync(changelogPath).toString();
+		const stream = createWriteStream(changelogPath);
 		stream.on('finish', () => {
-			const newLog: string = readFileSync('CHANGELOG.md')
+			const newLog: string = readFileSync(changelogPath)
 				.toString()
 				.replace(/##(?<title>.*)\n/g, '#$<title>')
 				.replace(/\n\n\n/g, '\n\n');
-			writeFileSync('CHANGELOG.md', newLog + changelog);
+			writeFileSync(changelogPath, newLog + changelog);
 		});
 		Release.conventionalChangelog({
 			preset: 'angular',
