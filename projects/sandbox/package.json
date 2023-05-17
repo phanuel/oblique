@@ -3,7 +3,8 @@
   "version": "",
   "scripts": {
     "start": "ng serve",
-    "test": "ng run sandbox:test:alt"
+    "test": "ng run sandbox:test:alt",
+    "build": "ng build"
   },
   "dependencies": {
     "raw-loader": "^4.0.2"
