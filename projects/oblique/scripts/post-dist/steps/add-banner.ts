@@ -4,7 +4,7 @@ import {version as currentVersion} from './../../../../../package.json';
 import path from 'path';
 
 export class AddBanner {
-	private static readonly directory = 'dist';
+	private static readonly directory = path.join('..', '..', 'dist');
 
 	static perform(): void {
 		const header = AddBanner.prepareHeader(currentVersion);
